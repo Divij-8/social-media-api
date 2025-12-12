@@ -13,7 +13,7 @@ class UserBase(SQLModel):
 
 
 class UserCreate(UserBase):
-    password: str = Field(min_length=8, max_length=72)
+    password: str = Field(min_length=8, max_length=128)
 
 
 class User(UserBase, table=True):
