@@ -1,10 +1,10 @@
 from fastapi import FastAPI, Depends, HTTPException
 from contextlib import asynccontextmanager
-from database import create_db_and_tables
+from database import create_db_and_tables, SessionDep
 from sqlmodel import Session
 from database import get_session
 from models import User, UserCreate, UserRead
-from utils import hash_password
+from app.security import hash_password
 
 
 @asynccontextmanager
@@ -19,7 +19,7 @@ app = FastAPI(lifespan=lifespan)
 
 
 @app.post("/users", response_model=UserRead)
-def create_user(user_in: UserCreate, session: Session = Depends(get_session)):
+def create_user(user_in: UserCreate, session: SessionDep):
     hashed_pwd = hash_password(user_in.password)
     extra_user = User(
         email = user_in.email, 
