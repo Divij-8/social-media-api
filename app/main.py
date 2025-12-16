@@ -1,10 +1,9 @@
 from fastapi import FastAPI, Depends, HTTPException
 from contextlib import asynccontextmanager
-from database import create_db_and_tables, SessionDep
-from sqlmodel import Session
-from database import get_session
+from database import create_db_and_tables, SessionDep, get_session
 from models import User, UserCreate, UserRead
-from app.security import hash_password
+from security import hash_password
+from routers import auth
 
 
 @asynccontextmanager
@@ -16,6 +15,8 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+
+app.include_router(auth.router)
 
 
 @app.post("/users", response_model=UserRead)
