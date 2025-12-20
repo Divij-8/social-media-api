@@ -17,7 +17,7 @@ class UserCreate(UserBase):
 
 
 class User(UserBase, table=True):
-    __tablename__ = "users"
+    __tablename__ = "users_v2"
     id: Optional[int] = Field(primary_key=True, default=None)  
     password_hash: str 
     created_at: datetime = Field(default_factory= lambda: datetime.now(timezone.utc))
@@ -38,15 +38,16 @@ class UserUpdate(UserBase):
 class PostBase(SQLModel):
     title: str
     content: str
-    published: bool = True
+    
 
 
 class Post(PostBase, table=True):
     __tablename__ = "posts"
     id: Optional[int] = Field(primary_key=True, default=None) 
-    user_id: int = Field(foreign_key="users.id")    
+    user_id: int = Field(foreign_key="users_v2.id")    
     created_at: datetime = Field(default_factory= lambda: datetime.now(timezone.utc))
     user: Optional["User"] = Relationship(back_populates="posts")
+    published: bool = Field(default=True)
 
 
 class PostCreate(PostBase):
@@ -55,9 +56,10 @@ class PostCreate(PostBase):
 
 class PostRead(PostBase):
     id: int
+    title: str
+    content: str
     created_at: datetime
     user_id: int
-    user: UserRead
     
 
 
