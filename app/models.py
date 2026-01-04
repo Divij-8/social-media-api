@@ -54,18 +54,43 @@ class PostCreate(PostBase):
     pass
 
 
+class PostUpdate(SQLModel):
+    title: str | None = None
+    content: str | None = None
+
+
 class PostRead(PostBase):
     id: int
-    title: str
-    content: str
     created_at: datetime
     user_id: int
+    published: bool
     
 
+class Vote(SQLModel, table=True):
+    __tablename__ = "votes"
+
+    user_id: int = Field(foreign_key="users_v2.id", primary_key=True)
+    post_id: int =Field(foreign_key="posts.id", primary_key=True)
+
+class VoteCreate(SQLModel):
+    post_id: int
+    dir: int = Field(le=1)
 
 
+class PostOut(SQLModel):
+    post: PostRead
+    votes: int
 
 
+class Follow(SQLModel, table=True):
+    __tablename__ = "follows"
+
+    follower_id: int = Field(foreign_key="users_v2.id", primary_key=True)
+    followed_id: int = Field(foreign_key="users_v2.id", primary_key=True)
+
+
+class FollowCreate(SQLModel):
+    followed_id: int
 
 
 
