@@ -1,6 +1,6 @@
 from pwdlib import PasswordHash
 from fastapi.security import OAuth2PasswordBearer
-from config import settings 
+from app.config import settings
 
 
 password_hash = PasswordHash.recommended()

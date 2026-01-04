@@ -4,10 +4,10 @@ from jwt.exceptions import InvalidTokenError
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlmodel import Session, select
-from config import settings
-from models import User
-from security import verify_password
-from database import get_session
+from app.config import settings
+from app.models import User
+from app.security import verify_password
+from app.database import get_session
 
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
@@ -59,7 +59,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), session: Session = Dep
         raise credentials_exception
     
     return user
-    
+
 
 
 
