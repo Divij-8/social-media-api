@@ -6,16 +6,12 @@ from app.database import get_session
 from app.oauth2 import create_access_token
 from app import models
 
-
-sqlite_file_name = "database.db"
 sqlite_url = "sqlite:///test.db"  
-
 engine = create_engine(
     sqlite_url, 
     connect_args={"check_same_thread": False}, 
     poolclass=None
 )
-
 
 @pytest.fixture(name="session")
 def session_fixture():
@@ -30,7 +26,6 @@ def session_fixture():
 def client_fixture(session: Session):
     def get_session_override():
         return session
-
     app.dependency_overrides[get_session] = get_session_override
     
     client = TestClient(app)
@@ -60,9 +55,6 @@ def authorized_client(client, token):
     }
     return client
 
-
-# append to tests/conftest.py
-
 @pytest.fixture
 def test_user2(client):
     user_data = {"email": "test2@gmail.com", "password": "password123", "username": "testuser2"}
@@ -89,13 +81,12 @@ def test_posts(test_user, session, test_user2):
     }, {
         "title": "3rd title",
         "content": "3rd content",
-        "user_id": test_user2['id'] # Belong to different user
+        "user_id": test_user2['id']
     }]
-
     
-
     def create_post_model(post):
         return models.Post(**post)
+    
     post_map = map(create_post_model, posts_data)
     posts = list(post_map)
     

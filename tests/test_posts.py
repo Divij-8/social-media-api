@@ -1,9 +1,8 @@
-import pytest
-from app import models 
+from sqlmodel import select
+from app import models
 
 def test_get_all_posts(authorized_client, test_posts):
     res = authorized_client.get("/posts/")
-    
     assert res.status_code == 200
     assert len(res.json()) == 4
 
@@ -14,7 +13,6 @@ def test_unauthorized_user_get_all_posts(client, test_posts):
 def test_get_one_post(authorized_client, test_posts):
     res = authorized_client.get(f"/posts/{test_posts[0].id}")
     post = res.json()
-    
     assert res.status_code == 200
     assert post["post"]["id"] == test_posts[0].id
     assert post["post"]["content"] == test_posts[0].content
@@ -24,7 +22,6 @@ def test_create_post(authorized_client, test_user):
         "/posts/", json={"title": "arbitrary title", "content": "aasdfjasdf"}
     )
     created_post = res.json()
-    
     assert res.status_code == 201
     assert created_post["title"] == "arbitrary title"
     assert created_post["user_id"] == test_user['id']

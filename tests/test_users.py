@@ -1,8 +1,4 @@
 import pytest
-from app import models
-from jose import jwt
-from app.config import settings
-
 
 def test_root(client):
     res = client.get("/")
@@ -47,4 +43,35 @@ def test_create_user_duplicate_email(client, test_user):
         "/signup", 
         json={"email": test_user["email"], "password": "password123", "username": "othername"}
     )
-    assert res.status_code == 409  
+    assert res.status_code == 409
+
+
+def test_get_current_user_profile(authorized_client, test_user):
+    res = authorized_client.get("/users/me")
+    assert res.status_code == 200
+    user = res.json()
+    assert user["id"] == test_user["id"]
+    assert user["email"] == test_user["email"]
+    assert user["username"] == test_user["username"]
+    assert "password" not in user
+
+
+def test_get_current_user_profile_unauthorized(client):
+    res = client.get("/users/me")
+    assert res.status_code == 401
+
+
+def test_create_user_with_short_password(client):
+    res = client.post(
+        "/signup",
+        json={"email": "test@gmail.com", "password": "short", "username": "testuser"}
+    )
+    assert res.status_code == 422
+
+
+def test_create_user_with_short_username(client):
+    res = client.post(
+        "/signup",
+        json={"email": "test@gmail.com", "password": "password123", "username": "ab"}
+    )
+    assert res.status_code == 422
