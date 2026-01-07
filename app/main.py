@@ -1,14 +1,22 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
+import logging
 from app.database import create_db_and_tables
 from app.routers import auth, users, posts, vote, follow
 
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    print("Startup: Creating tables...")
+    logger.info("Startup: Creating tables...")
     create_db_and_tables()
+    logger.info("Application started successfully")
     yield
-    print("Shutdown: Cleaning up...")
+    logger.info("Shutdown: Cleaning up...")
 
 app = FastAPI(lifespan=lifespan)
 
