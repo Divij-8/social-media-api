@@ -1,5 +1,4 @@
 from pwdlib import PasswordHash
-from fastapi.security import OAuth2PasswordBearer
 from app.config import settings
 
 

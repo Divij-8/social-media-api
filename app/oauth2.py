@@ -1,9 +1,8 @@
 from datetime import datetime, timedelta, timezone
-import jwt
-from jwt.exceptions import InvalidTokenError
-from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
-from sqlmodel import Session, select
+from jose import jwt, JWTError # type: ignore
+from fastapi import Depends, HTTPException, status # type: ignore
+from fastapi.security import OAuth2PasswordBearer # type: ignore
+from sqlmodel import Session, select # type: ignore
 from app.config import settings
 from app.models import User
 from app.security import verify_password
@@ -49,7 +48,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), session: Session = Dep
         if user_id is None:
             raise credentials_exception
         
-    except InvalidTokenError:
+    except JWTError:
         raise credentials_exception
     
 

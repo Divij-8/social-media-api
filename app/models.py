@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
-from sqlmodel import SQLModel, Field, Relationship
+from sqlmodel import SQLModel, Field, Relationship # type: ignore
 from typing import List, Optional, Annotated
-from pydantic import EmailStr
+from pydantic import EmailStr # type: ignore
     
 
 Email = Annotated[EmailStr, Field(index=True, unique=True, max_length=128)]
@@ -31,8 +31,8 @@ class UserRead(UserBase):
     
 
 class UserUpdate(UserBase):
-    email: Email | None = None # type: ignore
-    username: Username | None = None # type: ignore
+    email: Optional[Email] = None # type: ignore
+    username: Optional[Username] = None # type: ignore
 
 
 class PostBase(SQLModel):
@@ -55,8 +55,8 @@ class PostCreate(PostBase):
 
 
 class PostUpdate(SQLModel):
-    title: str | None = None
-    content: str | None = None
+    title: Optional[str] = None
+    content: Optional[str] = None
 
 
 class PostRead(PostBase):

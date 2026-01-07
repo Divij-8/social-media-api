@@ -9,19 +9,27 @@ from app.oauth2 import get_current_user
 router = APIRouter(tags=["Posts"])
 
 
-@router.post("/posts", response_model=PostRead)
+@router.post("/posts", response_model=PostRead, status_code=status.HTTP_201_CREATED)
 def create_post(
     post_in: PostCreate,
     session: SessionDep,
     current_user: User = Depends(get_current_user)
 ):
     new_post = Post(**post_in.model_dump(), user_id=current_user.id)
-
     session.add(new_post)
     session.commit()
     session.refresh(new_post)
-
     return new_post
+
+
+@router.get("/posts/{id}", response_model=PostOut) 
+def get_post(id: int, session: SessionDep):
+    post = session.get(Post, id)
+    if not post:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"post with id: {id} was not found")
+    
+    votes = session.exec(select(func.count(Vote.post_id)).where(Vote.post_id == id)).one()
+    return {"post": post, "votes": votes}
 
 
 @router.get("/posts", response_model=list[PostOut])
