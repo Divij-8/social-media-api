@@ -8,7 +8,7 @@
 
 A high-performance, stateless REST API built with **FastAPI** and **PostgreSQL**. Designed for scalability using containerization and modern backend practices.
 
-**[🔴 Live Demo (Swagger UI)](https://social-media-api.onrender.com/docs)** *(Note: Hosted on free tier, may take 50s to wake up)*
+**[🔴 Live Demo (Swagger UI)](https://social-media-api-u6mh.onrender.com/docs)** *(Note: Hosted on free tier, may take 50s to wake up)*
 
 ---
 
