@@ -118,20 +118,6 @@ pytest tests/test_posts.py -v
 
 ---
 
-## 🔮 Future Roadmap
-
-This project is actively being improved. Upcoming features include:
-
-* [ ] **Rate Limiting:** Implementing `slowapi` to prevent abuse and improve API stability.
-* [ ] **Async Database Driver:** Migrating to `asyncpg` for high-concurrency performance.
-* [ ] **Advanced Feed Algorithm:** Personalized feed based on user follows and interactions.
-* [ ] **CI/CD Pipeline:** GitHub Actions workflow for automated testing and deployment.
-* [ ] **Search Functionality:** Full-text search for posts and users.
-* [ ] **Caching Layer:** Redis integration for improved performance.
-* [ ] **Email Notifications:** User notifications for follows, likes, and replies.
-
----
-
 ## 📂 Project Structure
 
 ```
@@ -153,12 +139,25 @@ social-media-api/
 ├── tests/
 │   ├── conftest.py             # Pytest fixtures and configuration
 │   ├── test_users.py           # User endpoint tests
-│   └── test_posts.py           # Post endpoint tests
+│   ├── test_posts.py           # Post endpoint tests
+│   └── test_follow.py          # Follow system endpoint tests
 ├── docker-compose.yml          # Docker Compose configuration
 ├── Dockerfile                  # Docker image configuration
 ├── requirements.txt            # Python dependencies
 └── README.md                   # This file
 ```
+
+---
+
+## 📈 Next Steps: Enterprise-Grade Backend
+
+This project served as a foundation for learning FastAPI and Python backend development. For enterprise-grade backend systems with advanced features like distributed transactions, reactive streams, and complex microservices architecture, I am transitioning to **Java with Spring Boot** to explore:
+
+- Spring Cloud for microservices
+- Advanced ORM with Hibernate/JPA
+- Reactive programming with Project Reactor
+- Enterprise-level security and performance optimization
+- Distributed systems and scalability patterns
 
 ---
 
