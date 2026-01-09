@@ -183,7 +183,7 @@ This project is open source and available under the MIT License.
 
 **Divij Mazumdar** — Aspiring Backend Engineer & AI Student
 
-[GitHub](https://github.com/Divij-8) | [LinkedIn](https://linkedin.com/in/divij-mazumdar)
+[GitHub](https://github.com/Divij-8) | [LinkedIn](https://www.linkedin.com/in/divij-mazumdar-b59016261/)
 
 ---
 
